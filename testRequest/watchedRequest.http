@@ -1,0 +1,25 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2NmZTkyZjZhNjg5MjRmYWE0ZTJlYiIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MTI2ODAsImV4cCI6MTcxOTUxNjI4MH0.J3awOWwimdYAHuS6U9caWZiBPDgyVCbWFwdbjOguGsc
+@userId = 667cfe92f6a68924faa4e2eb
+@movieId = 667d7f5a4978e8cbbcb0d187
+
+### Obtener todas las películas vistas de un usuario
+GET http://localhost:9000/api/user/watched/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}
+
+### Añadir una película a la lista de películas vistas de un usuario
+PUT http://localhost:9000/api/user/watched/{{userId}}/{{movieId}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Obtener detalles de un usuario específico (para verificar que se añadió la película vista)
+GET http://localhost:9000/api/users/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}
+
+### Eliminar una película de la lista de películas vistas de un usuario
+DELETE http://localhost:9000/api/user/watched/{{userId}}/{{movieId}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Obtener detalles de un usuario específico en cuanto a sus películas vistas (para verificar que se eliminó la película)
+GET http://localhost:9000/api/user/watched/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}

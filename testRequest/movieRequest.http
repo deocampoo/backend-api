@@ -1,0 +1,48 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
+@userId = 667dd9b87a5d5a58d01fa3ec
+
+### Crear película
+POST http://localhost:9000/api/movies HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
+
+{
+  "title": "Harry Potter",
+  "director": "JK Rolling",
+  "year": 2003,
+  "genre": "Fantasy",
+  "rating": 10,
+  "media_type": "movie",
+  "trailerUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0",
+  "overview": "A magic world"
+}
+
+### Crear serie
+POST http://localhost:9000/api/movies HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
+
+
+{
+  "name": "Breaking Bad",
+  "director": "Vince Gilligan",
+  "year": 2008,
+  "genre": "Drama",
+  "rating": 9.5,
+  "media_type": "tv",
+  "trailerUrl": "https://www.youtube.com/watch?v=HhesaQXLuRY",
+  "overview": "A high school chemistry teacher turned methamphetamine producer navigates the dangers of the drug trade with his former student."
+}
+
+### Obtener todas las películas y series
+GET http://localhost:9000/api/movies HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
+
+
+### Buscar película por ID
+GET http://localhost:9000/api/movies/{{userId}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
+
+### Eliminar película por ID
+DELETE http://localhost:9000/api/movies/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}
