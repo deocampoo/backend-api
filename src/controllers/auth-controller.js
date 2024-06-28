@@ -5,44 +5,39 @@ const { StatusCodes } = require("http-status-codes");
 
 const signUpUser = async (req, res) => {
   try {
-    const { email, password, recoveryAnswer } = req.body;
+    const { user, email, password, recoveryAnswer } = req.body;
+
+    if (!user) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid user" });
+    }
 
     if (!email) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Invalid email" });
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid email" });
     }
 
     if (!password) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Invalid password" });
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid password" });
     }
 
     if (!recoveryAnswer) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Invalid recoveryAnswer" });
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid recoveryAnswer" });
     }
 
-    const user = await User.findOne({ email });
-    if (user) {
-      return res
-        .status(StatusCodes.CONFLICT)
-        .json({ error: "Email is already in use" });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(StatusCodes.CONFLICT).json({ error: "Email is already in use" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, process.env.SALT);
+    const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
     const newUser = new User({
-      email: email,
+      user,
+      email,
       password: hashedPassword,
-      recoveryAnswer: recoveryAnswer,
+      recoveryAnswer,
     });
     await newUser.save();
 
-    res
-      .status(StatusCodes.CREATED)
-      .json({ message: "User registered successfully" });
+    res.status(StatusCodes.CREATED).json({ message: "User registered successfully" });
   } catch (err) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Server error during registration",
@@ -56,46 +51,36 @@ const signInUser = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Invalid email" });
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid email" });
     }
 
     if (!password) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "Invalid password" });
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid password" });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "Authentication failed. User not found." });
+      return res.status(StatusCodes.NOT_FOUND).json({ error: "Authentication failed. User not found." });
     }
 
-    const isMatch = await user.comparePassword(password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: "Invalid credentials", password: password });
+      return res.status(StatusCodes.UNAUTHORIZED).json({ error: "Invalid credentials" });
     }
 
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
+      { expiresIn: "1h" }
     );
 
-    res.status(StatusCodes.OK).json({ token: token, user: user });
+    res.status(StatusCodes.OK).json({ token, user });
   } catch (err) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Server error during signIn ", details: err.message });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Server error during sign in", details: err.message });
   }
 };
+
+
 const logoutUser = (req, res) => {
   const token = req.headers['authorization'];
 
@@ -103,6 +88,7 @@ const logoutUser = (req, res) => {
     return res.status(StatusCodes.BAD_REQUEST).json({ error: "No token provided" });
   }
 
+  // Invalida el token (esto es opcional y depende de cómo manejes la invalidación de tokens)
   jwt.sign(token, "", { expiresIn: 1 }, (logout, err) => {
     if (logout) {
       res.status(StatusCodes.OK).json({ message: "Logged out successfully" });
@@ -117,3 +103,4 @@ module.exports = {
   signInUser,
   logoutUser
 };
+
