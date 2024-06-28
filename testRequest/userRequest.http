@@ -8,15 +8,25 @@ POST http://localhost:9000/api/auth/signUpUser HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "prueba1@gmail.com",
-  "password": "clave1",
-  "recoveryAnswer": "carpincho"
+  "email": "deni_1d@hotmail.com",
+  "password": "clave1234",
+  "recoveryAnswer": "zorro"
 }
 
 ###
 # Iniciar sesión de un usuario.
 # Envía una solicitud POST para autenticar un usuario y obtener un token JWT.
 POST http://localhost:9000/api/auth/signInUser HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "prueba1@gmail.com",
+  "password": "clave1"
+}
+
+###
+# Cerrar sesion
+POST http://localhost:9000/api/auth/logoutUser HTTP/1.1
 Content-Type: application/json
 
 {

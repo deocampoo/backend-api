@@ -96,8 +96,24 @@ const signInUser = async (req, res) => {
       .json({ error: "Server error during signIn ", details: err.message });
   }
 };
+const logoutUser = (req, res) => {
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ error: "No token provided" });
+  }
+
+  jwt.sign(token, "", { expiresIn: 1 }, (logout, err) => {
+    if (logout) {
+      res.status(StatusCodes.OK).json({ message: "Logged out successfully" });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Logout error", details: err });
+    }
+  });
+};
 
 module.exports = {
   signUpUser,
   signInUser,
+  logoutUser
 };

@@ -1,11 +1,10 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MzExNDMsImV4cCI6MTcxOTUzNDc0M30.kyQZrlMTMcUvgKEQvCDxuGWxrhRA1Ep3fVyuiMd38RQ
 @userId = 667dd9b87a5d5a58d01fa3ec
 
 ### Crear película
 POST http://localhost:9000/api/movies HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
-
+Authorization: Bearer 
 {
   "title": "Harry Potter",
   "director": "JK Rolling",
