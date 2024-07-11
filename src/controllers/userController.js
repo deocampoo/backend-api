@@ -1,8 +1,8 @@
-const User = require("../models/user");
+const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const { StatusCodes } = require("http-status-codes");
 
-const getUserProfile = async (req, res) => {
+const getProfile = async (req, res) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId)
@@ -23,18 +23,8 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-const listAllUsers = async (_, res) => {
-  try {
-    const users = await User.find().select("-password");
-    res.status(StatusCodes.OK).json(users);
-  } catch (err) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Server error fetching users", details: err.message });
-  }
-};
 
-const removeUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
     const user = await User.findByIdAndDelete(userId);
@@ -53,7 +43,7 @@ const removeUser = async (req, res) => {
   }
 };
 
-const updatePassword = async (req, res) => {
+const updateUserPassword = async (req, res) => {
   const { email, password: newPassword, recoveryAnswer } = req.body;
 
   if (!email) {
@@ -92,9 +82,16 @@ const updatePassword = async (req, res) => {
   res.status(StatusCodes.OK).json({ message: "User updated successfully" });
 };
 
-module.exports = {
-  getUserProfile,
-  listAllUsers,
-  removeUser,
-  updatePassword,
+const listUsers = async (_, res) => {
+  try {
+    const users = await User.find().select("-password");
+    res.status(StatusCodes.OK).json(users);
+  } catch (err) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: "Server error fetching users", details: err.message });
+  }
 };
+
+module.exports = {
+ getProfile,deleteUser,updateUserPassword,listUsers};

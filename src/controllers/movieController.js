@@ -1,7 +1,7 @@
-const Movie = require("../models/movie");
+const Movie = require("../models/movieModel");
 const { StatusCodes } = require("http-status-codes");
 
-const addMovie = async (req, res) => {
+const insertMovie = async (req, res) => {
   try {
     const { title, name, media_type, trailerUrl, overview } = req.body;
 
@@ -24,36 +24,7 @@ const addMovie = async (req, res) => {
   }
 };
 
-const listAllMovies = async (_, res) => {
-  try {
-    const movies = await Movie.find();
-    res.status(StatusCodes.OK).json({ movies: movies });
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Error getting movies", error: error });
-  }
-};
-
-const getMovieById = async (req, res) => {
-  try {
-    const movieId = req.params.id;
-
-    const movie = await Movie.findById(movieId);
-    if (!movie) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Movie not found" });
-    }
-    res.status(StatusCodes.OK).json({ movie: movie });
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Error getting movie by ID", error: error });
-  }
-};
-
-const removeMovie = async (req, res) => {
+const deleteMovie = async (req, res) => {
   try {
     const movieId = req.params.id;
 
@@ -73,4 +44,37 @@ const removeMovie = async (req, res) => {
   }
 };
 
-module.exports = { addMovie, listAllMovies, getMovieById, removeMovie };
+
+const fetchMovieById = async (req, res) => {
+  try {
+    const movieId = req.params.id;
+
+    const movie = await Movie.findById(movieId);
+    if (!movie) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Movie not found" });
+    }
+    res.status(StatusCodes.OK).json({ movie: movie });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error getting movie by ID", error: error });
+  }
+};
+
+
+const listAllMovies = async (_, res) => {
+  try {
+    const movies = await Movie.find();
+    res.status(StatusCodes.OK).json({ movies: movies });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error getting movies", error: error });
+  }
+};
+
+
+
+module.exports = { insertMovie, deleteMovie, fetchMovieById, listAllMovies };

@@ -1,26 +1,14 @@
-const User = require("../models/user");
+const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { StatusCodes } = require("http-status-codes");
 
-const signUpUser = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { user, email, password, recoveryAnswer } = req.body;
 
-    if (!user) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid user" });
-    }
-
-    if (!email) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid email" });
-    }
-
-    if (!password) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid password" });
-    }
-
-    if (!recoveryAnswer) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid recoveryAnswer" });
+    if (!user || !email || !password || !recoveryAnswer) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "All fields are required" });
     }
 
     const existingUser = await User.findOne({ email });
@@ -46,16 +34,12 @@ const signUpUser = async (req, res) => {
   }
 };
 
-const signInUser = async (req, res) => {
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid email" });
-    }
-
-    if (!password) {
-      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid password" });
+    if (!email || !password) {
+      return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid email or password" });
     }
 
     const user = await User.findOne({ email });
@@ -80,15 +64,13 @@ const signInUser = async (req, res) => {
   }
 };
 
-
 const logoutUser = (req, res) => {
-  const token = req.headers['authorization'];
+  const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
 
   if (!token) {
     return res.status(StatusCodes.BAD_REQUEST).json({ error: "No token provided" });
   }
 
-  // Invalida el token (esto es opcional y depende de cómo manejes la invalidación de tokens)
   jwt.sign(token, "", { expiresIn: 1 }, (logout, err) => {
     if (logout) {
       res.status(StatusCodes.OK).json({ message: "Logged out successfully" });
@@ -99,8 +81,7 @@ const logoutUser = (req, res) => {
 };
 
 module.exports = {
-  signUpUser,
-  signInUser,
+  createUser,
+  loginUser,
   logoutUser
 };
-

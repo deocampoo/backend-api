@@ -1,36 +1,9 @@
-const Movie = require("../models/movie");
-const User = require("../models/user");
+const Movie = require("../models/movieModel");
+const User = require("../models/userModel");
 const { StatusCodes } = require("http-status-codes");
 
-const listAll = async (req, res) => {
-  try {
-    const userId = req.params.userId;
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "User not found" });
-    }
-
-    const userWatchedMovies = [];
-
-    for (const movieId of user.watchedMovies) {
-      const movie = await Movie.findById(movieId);
-      if (movie) {
-        userWatchedMovies.push(movie);
-      }
-    }
-
-    res.status(StatusCodes.OK).json({ watchedMovies: userWatchedMovies });
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Error listing watched movies", error: error.message });
-  }
-};
-
-const addMovie = async (req, res) => {
+const insertMovie = async (req, res) => {
   try {
     const userId = req.params.userId;
     const movieId = req.params.movieId;
@@ -70,7 +43,7 @@ const addMovie = async (req, res) => {
   }
 };
 
-const removeMovie = async (req, res) => {
+const deleteMovie = async (req, res) => {
   try {
     const userId = req.params.userId;
     const movieId = req.params.movieId;
@@ -111,4 +84,33 @@ const removeMovie = async (req, res) => {
   }
 };
 
-module.exports = { listAll, addMovie, removeMovie };
+const listAllMovies = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "User not found" });
+    }
+
+    const userWatchedMovies = [];
+
+    for (const movieId of user.watchedMovies) {
+      const movie = await Movie.findById(movieId);
+      if (movie) {
+        userWatchedMovies.push(movie);
+      }
+    }
+
+    res.status(StatusCodes.OK).json({ watchedMovies: userWatchedMovies });
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Error listing watched movies", error: error.message });
+  }
+};
+
+
+module.exports = {insertMovie, deleteMovie, listAllMovies};
