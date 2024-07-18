@@ -1,40 +1,8 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTg2OGQyMjIzMTU3OGVhODJiMTEyNCIsImVtYWlsIjoiRmxvcmVuY2lhRmxvcmVzQGdtYWlsLmNvbSIsImlhdCI6MTcyMTI2NDM2MSwiZXhwIjoxNzIxMjY3OTYxfQ.gGkSY2haEsS03eIxnxMUidUqVQ90XYuDfFrJtnTOHrA
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njk5OGRkNzA5MjlkMTkxMDY0MDVhMTYiLCJlbWFpbCI6ImRlbmlzZW9jYW1wby4wMEBnbWFpbC5jb20iLCJpYXQiOjE3MjEzNDAwNzYsImV4cCI6MTcyMTM0MzY3Nn0.vdjPGTmvN3Rls1YV21F2aHCC7-kyagBU_DFL3JYFfsk
 
-@userId = 6697434e6d095a4fa8d06007
 
-###
-# Registro de un nuevo usuario.
-# Envía una solicitud POST para registrar un nuevo usuario.
-POST http://localhost:9000/api/auth/createUser HTTP/1.1
-Content-Type: application/json
+@userId = 66998dd70929d19106405a16
 
-{
-  "user": "Roberta",
-  "email": "RobertaFlores@gmail.com",
-  "password": "clave1234"
-}
-
-###
-# Iniciar sesión de un usuario.
-# Envía una solicitud POST para autenticar un usuario y obtener un token JWT.
-POST http://localhost:9000/api/auth/loginUser HTTP/1.1
-Content-Type: application/json
-
-{
-  "email": "RobertaFlores@gmail.com",
-  "password": "clave1234"
-}
-
-###
-# Cerrar sesion
-POST http://localhost:9000/api/auth/logoutUser HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTg2OGQyMjIzMTU3OGVhODJiMTEyNCIsImVtYWlsIjoiRmxvcmVuY2lhRmxvcmVzQGdtYWlsLmNvbSIsImlhdCI6MTcyMTI2NDM2MSwiZXhwIjoxNzIxMjY3OTYxfQ.gGkSY2haEsS03eIxnxMUidUqVQ90XYuDfFrJtnTOHrA
-
-{
-  "email": "FlorenciaFlores@gmail.com",
-  "password": "clave1"
-}
 
 ###
 # Obtener todos los usuarios.
@@ -50,19 +18,6 @@ Authorization: Bearer {{token}}
 GET http://localhost:9000/api/users/{{userId}} HTTP/1.1
 Authorization: Bearer {{token}}
 
-###
-# Actualizar un usuario por ID.
-# Envía una solicitud PUT para actualizar los detalles de un usuario específico por su ID.
-# Necesita un token de autorización JWT en el encabezado.
-PUT http://localhost:9000/api/users/recovery HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-{
-   "email": "FlorenciaFlores@gmail.com",
-  "password": "clave134"
-  
-}
 
 ###
 # Iniciar sesión de un usuario, otra vez, pero con clave correcta
@@ -71,7 +26,7 @@ POST http://localhost:9000/api/auth/loginUser HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "FlorenciaFlores@gmail.com",
+  "email": "deniseocampo.00@gmail.com",
   "password": "clave124"
 }
 
