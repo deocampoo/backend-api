@@ -1,15 +1,8 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MjM2MzAsImV4cCI6MTcxOTUyNzIzMH0.OvdBxB6M0xj3GCBclU-0RhqkvS1XrlkpIkLL4_2eaoU
-@userId = 665fb2befd81f8988a68b832
-@movieId = 667d87b21cfe0888cd045c77
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTg2ZjMwOTk3MDJkNmNlYTU2ZGQ2NiIsImVtYWlsIjoiUm9iZXJ0YUZsb3Jlc0BnbWFpbC5jb20iLCJpYXQiOjE3MjEyNzYwNzAsImV4cCI6MTcyMTI3OTY3MH0.40aSlothp8vdrqIYac_yZfsdioFY_exXttVFC-0A2pM
+@userId= "66986f3099702d6cea56dd66"
 
-# ids de peliculas para probar
-#667d7f594978e8cbbcb0d185
-#667d7f5a4978e8cbbcb0d187
-#667d87b21cfe0888cd045c77
 
-### Obtener todos los usuarios (para obtener IDs de prueba)
-GET http://localhost:9000/api/users HTTP/1.1
-Authorization: Bearer {{token}}
+
 
 ### Obtener detalles de un usuario específico (para verificar un usuario existente)
 GET http://localhost:9000/api/users/{{userId}} HTTP/1.1

@@ -16,10 +16,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  recoveryAnswer: {
-    type: String,
-    required: true,
-  },
   favoriteMovies: [
     {
       type: mongoose.Schema.Types.ObjectId,

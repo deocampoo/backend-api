@@ -5,8 +5,7 @@
 ### Crear película
 POST http://localhost:9000/api/movies HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OTc0MTFhNmQwOTVhNGZhOGQwNjAwMiIsImVtYWlsIjoidHJlbnphQGdtYWlsLmNvbSIsImlhdCI6MTcyMTIyNTgyNiwiZXhwIjoxNzIxMjI5NDI2fQ.8cAkuDWRoPvrepxAecPHCEVHsnQ2W6D_rDLlbx1QeKw
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2N2RkOGMwZGUwYzM0YzAyYzRjNTMyNCIsImVtYWlsIjoicHJ1ZWJhMUBnbWFpbC5jb20iLCJpYXQiOjE3MTk1MzExNDMsImV4cCI6MTcxOTUzNDc0M30.kyQZrlMTMcUvgKEQvCDxuGWxrhRA1Ep3fVyuiMd38RQ
 {
   "title": "Harry Potter",
   "director": "JK Rolling",

@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+
 require("dotenv").config();
 const { expressjwt: jwt } = require("express-jwt");
 
@@ -32,7 +33,9 @@ app.listen(port, () => console.log("Server listening on port", port));
 
 // Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 app.use(
   jwt({
     secret: process.env.JWT_SECRET,

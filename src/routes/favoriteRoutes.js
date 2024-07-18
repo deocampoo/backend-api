@@ -1,11 +1,11 @@
 const express = require("express");
-
-const { insertMovie, deleteMovie, listAllMovies} = require("../controllers/favoriteController");
 const router = express.Router();
-
-router.put("/:userId/:movieId", insertMovie);
-router.delete("/:userId/:movieId", deleteMovie);
-router.get("/:userId", listAllMovies);
+const favoriteController = require("../controllers/favoriteController");
+router.post('/favorites/:userId', favoriteController.insertMovie);
+router.delete('/favorites/:userId/:movieId', favoriteController.deleteMovie);
+router.get('/favorites/:userId', favoriteController.listAllMovies);
 
 
 module.exports = router;
+
+

@@ -5,9 +5,9 @@ const { StatusCodes } = require("http-status-codes");
 
 const createUser = async (req, res) => {
   try {
-    const { user, email, password, recoveryAnswer } = req.body;
+    const { user, email, password } = req.body;
 
-    if (!user || !email || !password || !recoveryAnswer) {
+    if (!user || !email || !password) {
       return res.status(StatusCodes.BAD_REQUEST).json({ error: "All fields are required" });
     }
 
@@ -21,7 +21,6 @@ const createUser = async (req, res) => {
       user,
       email,
       password: hashedPassword,
-      recoveryAnswer,
     });
     await newUser.save();
 
@@ -53,7 +52,7 @@ const loginUser = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -63,6 +62,9 @@ const loginUser = async (req, res) => {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Server error during sign in", details: err.message });
   }
 };
+
+
+
 
 const logoutUser = (req, res) => {
   const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];

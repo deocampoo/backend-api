@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {insertMovie,deleteMovie,fetchMovieById,listAllMovies} = require("../controllers/movieController");
+const { insertMovie, deleteMovie, fetchMovieById, listAllMovies } = require("../controllers/movieController");
 
 router.post("/", insertMovie);
 router.delete("/:id", deleteMovie);

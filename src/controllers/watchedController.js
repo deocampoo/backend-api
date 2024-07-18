@@ -1,45 +1,36 @@
-const Movie = require("../models/movieModel");
-const User = require("../models/userModel");
-const { StatusCodes } = require("http-status-codes");
-
+const User = require('../models/userModel');
+const Movie = require('../models/movieModel');
+const { StatusCodes } = require('http-status-codes');
 
 const insertMovie = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const movieId = req.params.movieId;
+    const { id, title, media_type, genre, director, language } = req.body;
+
+    let movie = await Movie.findOne({ id });
+    if (!movie) {
+      movie = new Movie({ id, title, media_type, genre, director, language });
+      await movie.save();
+    }
 
     const user = await User.findById(userId);
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "User not found" });
+      return res.status(StatusCodes.NOT_FOUND).json({ message: 'User not found' });
     }
 
-    const movie = await Movie.findById(movieId);
-    if (!movie) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Movie not found" });
+    if (user.watchedMovies.some(m => m.toString() === movie._id.toString())) {
+      return res.status(StatusCodes.CONFLICT).json({ message: 'Movie already in watched list' });
     }
 
-    if (user.watchedMovies.includes(movieId)) {
-      return res
-        .status(StatusCodes.CONFLICT)
-        .json({ message: "Movie already in watched list" });
-    }
-
-    user.watchedMovies.push(movieId);
+    user.watchedMovies.push(movie._id);
     await user.save();
 
     res.status(StatusCodes.CREATED).json({
-      message: "Movie added to watched list successfully",
+      message: 'Movie added to watched list successfully',
       watchedMovies: user.watchedMovies,
     });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: "Error adding movie to watched list",
-      error: error.message,
-    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Error adding movie to watched list', error: error.message });
   }
 };
 
@@ -50,37 +41,18 @@ const deleteMovie = async (req, res) => {
 
     const user = await User.findById(userId);
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "User not found" });
+      return res.status(StatusCodes.NOT_FOUND).json({ message: 'User not found' });
     }
 
-    const movie = await Movie.findById(movieId);
-    if (!movie) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Movie not found" });
-    }
-
-    const movieIndex = user.watchedMovies.indexOf(movieId);
-    if (movieIndex === -1) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Movie not found in watched list" });
-    }
-
-    user.watchedMovies.splice(movieIndex, 1);
+    user.watchedMovies = user.watchedMovies.filter(m => m.toString() !== movieId);
     await user.save();
 
     res.status(StatusCodes.OK).json({
-      message: "Movie removed from watched list successfully",
+      message: 'Movie removed from watched list successfully',
       watchedMovies: user.watchedMovies,
     });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: "Error deleting movie from watched list",
-      error: error.message,
-    });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Error removing movie from watched list', error: error.message });
   }
 };
 
@@ -88,29 +60,15 @@ const listAllMovies = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).populate('watchedMovies');
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "User not found" });
+      return res.status(StatusCodes.NOT_FOUND).json({ message: 'User not found' });
     }
 
-    const userWatchedMovies = [];
-
-    for (const movieId of user.watchedMovies) {
-      const movie = await Movie.findById(movieId);
-      if (movie) {
-        userWatchedMovies.push(movie);
-      }
-    }
-
-    res.status(StatusCodes.OK).json({ watchedMovies: userWatchedMovies });
+    res.status(StatusCodes.OK).json({ watchedMovies: user.watchedMovies });
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Error listing watched movies", error: error.message });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Error listing watched movies', error: error.message });
   }
 };
 
-
-module.exports = {insertMovie, deleteMovie, listAllMovies};
+module.exports = { insertMovie, deleteMovie, listAllMovies };
