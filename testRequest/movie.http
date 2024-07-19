@@ -1,0 +1,31 @@
+@userId = 6699f97d12ec97f514b1f9eb
+
+
+
+### Crear pelicula o serie
+POST http://localhost:9000/api/movies HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njk5ZWZjYWQ4MGIwNzgxZWM1Yzc0ZjYiLCJlbWFpbCI6ImxvcmVuem9AZ21haWwuY29tIiwiaWF0IjoxNzIxMzY0NDQ2LCJleHAiOjE3MjEzNjgwNDZ9.7Kd2NlzOJiGBex6V8-j5HKcr1ZqSZ8BroR97z0Z2wn4
+
+
+{
+    "title": "Inception",
+    "media_type": "movie",
+    "genre": "Sci-Fi",
+    "director": "Christopher Nolan",
+    "language": "English"
+}
+
+### Obtener todas las películas y series
+GET http://localhost:9000/api/movies HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njk5ZWZjYWQ4MGIwNzgxZWM1Yzc0ZjYiLCJlbWFpbCI6ImxvcmVuem9AZ21haWwuY29tIiwiaWF0IjoxNzIxMzY0NDQ2LCJleHAiOjE3MjEzNjgwNDZ9.7Kd2NlzOJiGBex6V8-j5HKcr1ZqSZ8BroR97z0Z2wn4
+
+
+### Buscar película por ID
+GET http://localhost:9000/api/movies/{{userId}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njk5ZWZjYWQ4MGIwNzgxZWM1Yzc0ZjYiLCJlbWFpbCI6ImxvcmVuem9AZ21haWwuY29tIiwiaWF0IjoxNzIxMzY0NDQ2LCJleHAiOjE3MjEzNjgwNDZ9.7Kd2NlzOJiGBex6V8-j5HKcr1ZqSZ8BroR97z0Z2wn4
+
+
+### Eliminar película por ID
+DELETE http://localhost:9000/api/movies/{{userId}} HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njk5ZWZjYWQ4MGIwNzgxZWM1Yzc0ZjYiLCJlbWFpbCI6ImxvcmVuem9AZ21haWwuY29tIiwiaWF0IjoxNzIxMzY0NDQ2LCJleHAiOjE3MjEzNjgwNDZ9.7Kd2NlzOJiGBex6V8-j5HKcr1ZqSZ8BroR97z0Z2wn4

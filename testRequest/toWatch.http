@@ -1,0 +1,28 @@
+@token =  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njk5ZWZjYWQ4MGIwNzgxZWM1Yzc0ZjYiLCJlbWFpbCI6ImxvcmVuem9AZ21haWwuY29tIiwiaWF0IjoxNzIxMzY0NDQ2LCJleHAiOjE3MjEzNjgwNDZ9.7Kd2NlzOJiGBex6V8-j5HKcr1ZqSZ8BroR97z0Z2wn4
+
+@userId = 6699efcad80b0781ec5c74f6
+
+@movieId = 6699f9d712ec97f514b1f9f0
+
+
+### Se verifica si el usuario existe
+GET http://localhost:9000/api/users/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}
+
+### Se añade la pelicula a la lista de favoritos del usuario
+PUT http://localhost:9000/api/user/to-watch/{{userId}}/{{movieId}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Se obtiene el usuario por ID para corroborar si la pelicula se agrego
+GET http://localhost:9000/api/users/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}
+
+### Borra la pelicula
+DELETE http://localhost:9000/api/user/to-watch/{{userId}}/{{movieId}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### Se obtiene el usuario por ID para corroborar si se borro la pelucula 
+GET http://localhost:9000/api/user/to-watch/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}

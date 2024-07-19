@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 
 const movieSchema = new mongoose.Schema(
   {
-    title_movie: {
+    title: {
       type: String,
       required: function () {
         return this.media_type === "movie";
       },
     },
-    title_tv: {
+    name: {
       type: String,
       required: function () {
         return this.media_type === "tv";
@@ -25,14 +25,13 @@ const movieSchema = new mongoose.Schema(
     },
     director: {
       type: String,
-      required: function () {
-        return this.media_type === "movie";
-      },
+      required: true,
     },
     language: {
       type: String,
       required: true,
     },
+   
   },
   {
     timestamps: true,

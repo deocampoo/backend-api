@@ -1,0 +1,20 @@
+@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njk5OGRkNzA5MjlkMTkxMDY0MDVhMTYiLCJlbWFpbCI6ImRlbmlzZW9jYW1wby4wMEBnbWFpbC5jb20iLCJpYXQiOjE3MjEzNDAwNzYsImV4cCI6MTcyMTM0MzY3Nn0.vdjPGTmvN3Rls1YV21F2aHCC7-kyagBU_DFL3JYFfsk
+
+@userId = 66998dd70929d19106405a16
+
+
+###
+# Se obtienen todos los usuarios
+GET http://localhost:9000/api/users HTTP/1.1
+Authorization: Bearer {{token}}
+
+###
+# Se obtiene el detalle de un usuario por ID
+GET http://localhost:9000/api/users/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+###
+# Elimina un usuario por ID.
+DELETE http://localhost:9000/api/users/{{userId}} HTTP/1.1
+Authorization: Bearer {{token}}

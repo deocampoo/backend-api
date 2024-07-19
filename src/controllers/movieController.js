@@ -1,19 +1,24 @@
 const Movie = require("../models/movieModel");
-const User = require("../models/userModel");
 const { StatusCodes } = require("http-status-codes");
 
 const insertMovie = async (req, res) => {
   try {
-    const { title, name, media_type, trailerUrl, overview, poster_path } = req.body;
+    const { title, name, media_type, genre, director, language } = req.body;
 
-    const movie = new Movie({
-      title,
-      name,
+    const movieData = {
       media_type,
-      trailerUrl,
-      overview,
-      poster_path,
-    });
+      genre,
+      director,
+      language,
+    };
+
+    if (media_type === "movie") {
+      movieData.title = title;
+    } else if (media_type === "tv") {
+      movieData.name = name;
+    }
+
+    const movie = new Movie(movieData);
     await movie.save();
 
     res.status(StatusCodes.CREATED).json({ message: "Movie added successfully", movie: movie });

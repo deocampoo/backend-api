@@ -43,45 +43,6 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const updateUserPassword = async (req, res) => {
-  const { email, password: newPassword, recoveryAnswer } = req.body;
-
-  if (!email) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: "Invalid email" });
-  }
-
-  if (!newPassword) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: "Invalid password" });
-  }
-
-  if (!recoveryAnswer) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: "Invalid recoveryAnswer" });
-  }
-
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res
-      .status(StatusCodes.NOT_FOUND)
-      .json({ error: "Authentication failed. User not found." });
-  }
-
-  if (user.recoveryAnswer !== recoveryAnswer) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ error: "Invalid recoveryAnswer." });
-  }
-
-  const hashedPassword = await bcrypt.hash(newPassword, process.env.SALT);
-  user.password = hashedPassword;
-  await user.save();
-
-  res.status(StatusCodes.OK).json({ message: "User updated successfully" });
-};
-
 const listUsers = async (_, res) => {
   try {
     const users = await User.find().select("-password");
@@ -94,4 +55,4 @@ const listUsers = async (_, res) => {
 };
 
 module.exports = {
- getProfile,deleteUser,updateUserPassword,listUsers};
+ getProfile,deleteUser,listUsers};

@@ -7,7 +7,6 @@ const insertMovie = async (req, res) => {
     const userId = req.params.userId;
     const { id, title, media_type, genre, director, language } = req.body;
 
-    // Verifica si la película ya existe en la colección de películas
     let movie = await Movie.findOne({ id });
     if (!movie) {
       movie = new Movie({ id, title, media_type, genre, director, language });
